@@ -7,15 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class HomeController {
 
     @Autowired
-    PedidosRepository pedidosRepository;
+    private PedidosRepository pedidosRepository;
 
     @GetMapping("/home")
     public String home(Model model) {

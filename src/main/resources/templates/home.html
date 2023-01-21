@@ -12,6 +12,28 @@
 
 <body>
     <div class="container">
+        <div class="container mb-2 p-5 bg-light border rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5">
+                    Meus Pedidos
+                </h1>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand bg-body-tertiary mb-3">
+            <div class="container-fluid d-flex justify-content-between">
+                <div class="navbar-nav">
+                    <a class="nav-link active" href="#">Todos</a>
+                    <a class="nav-link" href="#">Aguardando</a>
+                    <a class="nav-link" href="#">Aprovado</a>
+                    <a class="nav-link" href="#">Entregue</a>
+                </div>
+                <div>
+                    <a href="/pedido/formulario">
+                        <button class="btn btn-outline-secondary">Novo</button>
+                    </a>
+                </div>
+            </div>
+        </nav>
         <div th:each="pedido : ${listaPedidos}" class="card">
             <div class="card-header">
                 <div th:text="${pedido.nomeProduto}">

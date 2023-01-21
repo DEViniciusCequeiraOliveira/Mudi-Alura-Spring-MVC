@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-Br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Meus Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="container mb-2 p-5 bg-light border rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5">
+                    Meus Pedidos
+                </h1>
+            </div>
+        </div>
+        <form action="/pedido/novo" method="post">
+            <div>
+                <label for="nomeProduto">Produto</label>
+                <input name="nomeProduto" placeholder="nome do produto">
+                <small>Informe qual o nome do produto</small>
+            </div>
+            <div>
+                <label for="urlProduto">Url</label>
+                <input name="urlProduto" placeholder="url do produto">
+                <small>Procure em um site o produto que você deseja e cole a url da página aqui</small>
+            </div>
+            <div>
+                <label for="urlImagem">Imagem</label>
+                <input name="urlImagem" placeholder="url da imagem">
+                <small>Informe qual o nome do produto</small>
+            </div>
+            <div>
+                <label for="descricao">Descrição</label>
+                <textarea name="descricao" placeholder="Adicione detalhes importantes sobre o produto"></textarea>
+            </div>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+</body>
+
+</html>
