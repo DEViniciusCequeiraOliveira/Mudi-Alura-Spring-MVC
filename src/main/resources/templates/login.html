@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-Br">
+
+<head th:replace="~{base :: head}"></head>
+
+<body>
+<header th:replace="~{base :: header}"></header>
+<div class="container">
+    <div th:replace="~{base :: jumbotron('Login')}"></div>
+    <div class="card">
+        <form th:action="@{/login}" method="post" class="card-body">
+            <div class="mb-3">
+                <label for="username">Usuario</label>
+                <input name="username" placeholder="Usuário" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="password">Senha</label>
+                <input name="password" placeholder="Senha" type="password" class="form-control">
+            </div>
+                <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

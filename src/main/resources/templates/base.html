@@ -24,7 +24,9 @@
             mudi
         </span>
         <span>
-            login
+            <a sec:authorize="!isAuthenticated()" href="/login" class="text-light">Login</a>
+            <a onclick="document.querySelector('#logout').submit()" sec:authorize="isAuthenticated()" href="#" class="text-light">Logout</a>
+            <form id="logout" th:action="@{/logout}" method="post"></form>
         </span>
     </div>
 </header>
