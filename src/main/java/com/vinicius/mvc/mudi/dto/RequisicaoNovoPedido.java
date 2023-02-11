@@ -1,12 +1,16 @@
 package com.vinicius.mvc.mudi.dto;
 
 import com.vinicius.mvc.mudi.model.Pedido;
+import com.vinicius.mvc.mudi.model.StatusPedido;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class RequisicaoNovoPedido {
     @NotBlank
     private String nomeProduto;
-    @NotBlank
+    @NotBlank @Size(max = 255)
     private String urlProduto;
     @NotBlank
     private String urlImagem;
@@ -50,6 +54,7 @@ public class RequisicaoNovoPedido {
         pedido.setDescricao(this.descricao);
         pedido.setNomeProduto(this.nomeProduto);
         pedido.setUrlProduto(this.urlProduto);
+        pedido.setStatus(StatusPedido.AGUARDANDO);
         return pedido;
     }
 }
