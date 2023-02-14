@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,19 +22,20 @@ public class HomeController {
     private PedidosRepository pedidosRepository;
 
     @GetMapping()
-    public String home(Model model) {
-        List<Pedido> listaDePedidos = pedidosRepository.findAll();
-        model.addAttribute("listaPedidos",listaDePedidos);
+    public String home(Model model, Principal principal) {
+        List<Pedido> listaDePedidos = pedidosRepository.findAllByUsuario(principal.getName());
+        model.addAttribute("listaPedidos", listaDePedidos);
         return "home";
     }
 
     @GetMapping("/{status}")
     public String porStatus(@PathVariable("status") String status, Model model) {
         List<Pedido> listaDePedidos = pedidosRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
-        model.addAttribute("listaPedidos",listaDePedidos);
-        model.addAttribute("status",status);
+        model.addAttribute("listaPedidos", listaDePedidos);
+        model.addAttribute("status", status);
         return "home";
     }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public String onError() {
         return "redirect:/home";

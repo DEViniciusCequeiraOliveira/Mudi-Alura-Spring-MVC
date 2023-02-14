@@ -2,8 +2,6 @@ package com.vinicius.mvc.mudi.dto;
 
 import com.vinicius.mvc.mudi.model.Pedido;
 import com.vinicius.mvc.mudi.model.StatusPedido;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
