@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-Br">
+
+<head th:replace="~{base :: head}"></head>
+
+<body>
+    <header th:replace="~{base :: header}"></header>
+    <div class="container">
+        <div th:replace="~{base :: jumbotron('Meus Pedidos')}"></div>
+
+        <nav class="navbar navbar-expand bg-body-tertiary mb-3">
+            <div class="container-fluid d-flex justify-content-between">
+
+                <div class="navbar-nav">
+                    <a th:classappend="${status} == null ? 'active' " class="nav-link"
+                        th:href="@{/usuario/pedido}">Todos</a>
+                    <a th:classappend="${status} == 'aguardando' ? 'active' " class="nav-link"
+                        th:href="@{/usuario/pedido/aguardando}">Aguardando</a>
+                    <a th:classappend="${status} == 'aprovado' ? 'active' " class="nav-link"
+                        th:href="@{/usuario/pedido/aprovado}">Aprovado</a>
+                    <a th:classappend="${status} == 'entregue' ? 'active' " class="nav-link"
+                        th:href="@{/usuario/pedido/entregue}">Entregue</a>
+                </div>
+
+                <div>
+                    <a href="/pedido/formulario">
+                        <button class="btn btn-outline-secondary">Novo</button>
+                    </a>
+                </div>
+
+            </div>
+        </nav>
+
+        <div th:each="pedido : ${listaPedidos}" class="card mb-3">
+
+            <th:block th:switch="${pedido.status.name()}">
+                <div th:case="'AGUARDANDO'" class="card-header alert alert-warning">
+                    <div th:text="${pedido.nomeProduto}">
+                        Nome do Produto
+                    </div>
+                </div>
+
+                <div th:case="'APROVADO'" class="card-header alert alert-success">
+                    <div th:text="${pedido.nomeProduto}">
+                        Nome do Produto
+                    </div>
+                </div>
+
+                <div th:case="'ENTREGUE'" class="card-header alert alert-light">
+                    <div th:text="${pedido.nomeProduto}">
+                        Nome do Produto
+                    </div>
+                </div>
+            </th:block>
+
+
+            <div class="card-body row">
+
+                <div class="col-12 col-sm-8">
+
+                    <div class="row">
+                        <div class="col-lg-5">
+                            Valor:
+                            <span th:if="${pedido.valorNegociado} != null"
+                                th:text="'R$ ' + ${#numbers.formatDecimal(pedido.valorNegociado,0,'POINT',2,'COMMA')}">
+                                450,50
+                            </span>
+                        </div>
+
+                        <div class="col-lg-7">
+                            Data Entrega:
+                            <span th:text="${#temporals.format(pedido.dataDaEntrega, 'dd/MM/yyyy ')}">
+                                21/01/23
+                            </span>
+                        </div>
+                    </div>
+
+                    <div>
+                        Produto:
+                    </div>
+
+                    <div>
+                        <input th:value="${pedido.urlProduto}" class="form-control" value="Url do produto" />
+                    </div>
+
+                    <div>
+                        Descrição:
+                    </div>
+
+                    <div>
+                        <textarea th:text="${pedido.descricao}" class="form-control">Descrição do pedido</textarea>
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-sm-4">
+                    <div>
+                        <img th:src="${pedido.urlImagem}" class="img-thumbnail" src="">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

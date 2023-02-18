@@ -16,35 +16,36 @@ import javax.sql.DataSource;
 
 public class WebSecurityConfig {
 
-    @Autowired
-    private DataSource dataSource;
+        @Autowired
+        private DataSource dataSource;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .permitAll()
-                        .defaultSuccessUrl("/home")
-                )
-                .logout((logout) -> logout
-                        .permitAll());
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests((requests) -> requests
+                                                .requestMatchers("/home/**")
+                                                .permitAll()
+                                                .anyRequest()
+                                                .authenticated())
+                                .formLogin((form) -> form
+                                                .loginPage("/login")
+                                                .permitAll()
+                                                .defaultSuccessUrl("/usuario/pedido"))
+                                .logout((logout) -> logout
+                                                .permitAll()
+                                                .logoutSuccessUrl("/home"));
 
-        return http.build();
-    }
+                return http.build();
+        }
 
+        @Autowired
+        public void configure(AuthenticationManagerBuilder auth) throws Exception {
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                auth
+                                .jdbcAuthentication()
+                                .dataSource(dataSource)
+                                .passwordEncoder(encoder);
 
-    @Autowired
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(encoder);
-
-    }
+        }
 
 }
