@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
@@ -38,14 +41,15 @@ public class WebSecurityConfig {
                 return http.build();
         }
 
-        @Autowired
-        public void configure(AuthenticationManagerBuilder auth) throws Exception {
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                auth
-                                .jdbcAuthentication()
-                                .dataSource(dataSource)
-                                .passwordEncoder(encoder);
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
+        @Bean
+        public UserDetailsManager users(DataSource dataSource) {
+                JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+                return users;
         }
 
 }
