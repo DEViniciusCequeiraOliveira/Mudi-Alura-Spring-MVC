@@ -6,10 +6,20 @@ import java.time.format.DateTimeFormatter;
 
 import com.vinicius.mvc.mudi.model.Oferta;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 public class RequisicaoNovaOferta {
+
     private Long pedidoId;
+
+    @NotNull
+    @Pattern(regexp = "^\\d+(\\.\\d+{2})?$")
     private String valor;
-    private String dataDaEntrga;
+
+    @NotNull
+    @Pattern(regexp = "^\\d+{2}/\\d+{2}/\\d+{4}")
+    private String dataDaEntrega;
     private String comentario;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -30,12 +40,12 @@ public class RequisicaoNovaOferta {
         this.valor = valor;
     }
 
-    public String getDataDaEntrga() {
-        return dataDaEntrga;
+    public String getDataDaEntrega() {
+        return dataDaEntrega;
     }
 
-    public void setDataDaEntrga(String dataDaEntrga) {
-        this.dataDaEntrga = dataDaEntrga;
+    public void setDataDaEntrega(String dataDaEntrega) {
+        this.dataDaEntrega = dataDaEntrega;
     }
 
     public String getComentario() {
@@ -48,11 +58,9 @@ public class RequisicaoNovaOferta {
 
     public Oferta toOferta() {
         Oferta oferta = new Oferta();
-
         oferta.setComentario(this.comentario);
-        oferta.setDataDaEntrega(LocalDate.parse(this.dataDaEntrga, formatter));
+        oferta.setDataDaEntrega(LocalDate.parse(this.dataDaEntrega, formatter));
         oferta.setValor(new BigDecimal(this.valor));
-
         return oferta;
     }
 }

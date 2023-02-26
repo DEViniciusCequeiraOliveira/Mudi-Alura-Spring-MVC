@@ -18,19 +18,6 @@
             <div class="card-body row">
 
                 <div class="col-12 col-sm-8">
-
-                    <div class="row">
-                        <div class="col-lg-5">
-                            Valor:
-                            <input />
-                        </div>
-
-                        <div class="col-lg-7">
-                            Data Entrega:
-                            <input />
-                        </div>
-                    </div>
-
                     <div>
                         Produto:
                     </div>
@@ -42,9 +29,34 @@
                         Descrição:
                     </div>
                     <div>
-                        <textarea class="form-control">{{pedido.descricao}}</textarea>
+                        <textarea disabled class="form-control">{{pedido.descricao}}</textarea>
                     </div>
 
+                    <div class="row mt-3">
+                        <div class="col-lg-5">
+                            Valor:
+                            <input class="form-control" v-bind:class="{'is-invalid' : pedido.erros.valor != ''}"
+                                v-model="pedido.valorNegociado" />
+                            <div v-if="pedido.erros.valor" class="invalid-feedback">{{pedido.erros.valor}}</div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            Data Entrega:
+                            <input class="form-control" v-model="pedido.dataDaEntrega"
+                                v-bind:class="{'is-invalid' : pedido.erros.valor != ''}" />
+                            <div v-if="pedido.erros.dataDaEntrega" class="invalid-feedback">
+                                {{pedido.erros.dataDaEntrega}}</div>
+                        </div>
+                        <div>
+                            Comentário:
+                        </div>
+                        <div>
+                            <textarea class="form-control" v-model="pedido.comentario"></textarea>
+                        </div>
+                    </div>
+                    <button v-if="!pedido.ofertaEnviada" v-on:click="enviarOferta(pedido)"
+                        class="btn btn-primary mt-2">Enviar Oferta</button>
+                    <button v-else class="btn btn-success mt-2">Oferta Enviada</button>
                 </div>
 
                 <div class="col-12 col-sm-4">
@@ -69,10 +81,39 @@
                     axios
                         .get('http://localhost:8080/api/pedidos/aguardando')
                         .then(response => {
+                            response.data.forEach(pedido => {
+                                pedido.ofertaEnviada = false
+                                pedido.erros = {
+                                    valor: '',
+                                    dataDaEntrega: ''
+                                }
+                            });
                             this.pedidos = response.data
                         }
                         );
                 },
+                methods: {
+                    enviarOferta: function (pedido) {
+                        pedido.erros = {
+                            valor: '',
+                            dataDaEntrega: ''
+                        };
+
+                        axios
+                            .post('http://localhost:8080/api/ofertas', {
+                                pedidoId: pedido.id,
+                                valor: pedido.valorNegociado,
+                                dataDaEntrega: pedido.dataDaEntrega,
+                                comentario: pedido.comentario
+                            })
+                            .then(response => pedido.ofertaEnviada = true)
+                            .catch(error => {
+                                error.response.data.errors.forEach(error => {
+                                    pedido.erros[error.field] = error.defaultMessage;
+                                })
+                            })
+                    }
+                }
             }
             );
         }

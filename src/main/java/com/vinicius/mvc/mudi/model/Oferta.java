@@ -3,6 +3,8 @@ package com.vinicius.mvc.mudi.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ public class Oferta {
     private LocalDate dataDaEntrega;
     private String comentario;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Pedido pedido;
 
