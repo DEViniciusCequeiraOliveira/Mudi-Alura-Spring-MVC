@@ -25,7 +25,7 @@ O sistema possibilita cadastrar produtos e alterar os status dos Produtos. Esses
 
 - Ter o [JDK 17 ou superior](https://www.oracle.com/java/technologies/downloads/) instalado na sua máquina.
 - Ter o [XAMPP](https://www.apachefriends.org/pt_br/index.html) para subir o banco de dados.
-- Importar o Dump `dump-mudi`.
+- Importar o Dump `dump-mudi.sql`.
 - Ter algum editor de códigos ou IDE como o [NetBeans](https://netbeans.apache.org/download/nb13/nb13.html). 
 
 
